@@ -5,7 +5,7 @@ from datetime import datetime
 from discord.ext import commands
 from utils.custom_context import BaguetteContext
 
-cogs = ["cogs.errorhandler", "cogs.owner"]
+cogs = ["cogs.errorhandler", "cogs.owner", "cogs.coding"]
 
 
 class Baguette(commands.Bot):
