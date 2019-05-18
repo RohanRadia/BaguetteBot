@@ -8,12 +8,16 @@ class Owners(commands.Cog):
 
     @commands.command()
     async def load(self, ctx, cog: str):
+        """Load a cog"""
+
         self.bot.load_extension(cog)
         logger.info(f"Successfully loaded extension: {cog}")
         await ctx.send(f"`{cog}` successfully loaded.")
 
     @commands.command()
     async def unload(self, ctx, cog: str):
+        """Unload a cog"""
+
         self.bot.unload_extension(cog)
         logger.info(f"Successfully unloaded extension: {cog}")
         await ctx.send(f"`{cog}` successfully unloaded.")
