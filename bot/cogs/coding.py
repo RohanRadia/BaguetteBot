@@ -2,7 +2,7 @@ from bot import logger
 from discord.ext import commands
 
 
-class Owners(commands.Cog):
+class Coding(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -32,4 +32,4 @@ class Owners(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Owners(bot))
+    bot.add_cog(Coding(bot))
