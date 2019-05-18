@@ -1,0 +1,24 @@
+from bot import logger
+from discord.ext import commands
+
+
+class Owners(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.command()
+    async def load(self, ctx, cog: str):
+        self.bot.load_extension(cog)
+        logger.info(f"Successfully loaded extension: {cog}")
+        await ctx.send(f"`{cog}` successfully loaded.")
+
+    @commands.command()
+    async def unload(self, ctx, cog: str):
+        self.bot.unload_extension(cog)
+        logger.info(f"Successfully unloaded extension: {cog}")
+        await ctx.send(f"`{cog}` successfully unloaded.")
+
+
+def setup(bot):
+    bot.add_cog(Owners(bot))
+    logger.info('Owners Cog Loaded!')
