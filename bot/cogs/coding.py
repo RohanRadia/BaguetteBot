@@ -1,3 +1,5 @@
+import aiohttp
+
 from bot import logger
 from discord.ext import commands
 
@@ -6,29 +8,26 @@ class Coding(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=("sd", "shutdown", "lo"))
-    async def logout(self, ctx):
-        """Logout of bot"""
-
-        await ctx.send("`Bot logging out... closing connections.`")
-        logger.info("Logged out - all connections closed.")
-        await self.bot.logout()
-
     @commands.command()
-    async def load(self, ctx, cog: str):
-        """Load a cog"""
+    async def mystbin(self, ctx, *, content: str):
+        """Send data to MystBin"""
 
-        self.bot.load_extension(cog)
-        logger.info(f"Successfully loaded extension: {cog}")
-        await ctx.send(f"`{cog}` successfully loaded.")
+        if content.startswith("```python") and content.endswith("```"):
+            content = content[10:len(content)-3]
+        elif content.startswith("```py") and content.endswith("```"):
+            content = content[6:len(content)-3]
 
-    @commands.command()
-    async def unload(self, ctx, cog: str):
-        """Unload a cog"""
+        for x in range(0, 3):
+            if content[0] == '`':
+                content = content[1:]
+            if content[-1] == '`':
+                content = content[:len(content) - 1]
 
-        self.bot.unload_extension(cog)
-        logger.info(f"Successfully unloaded extension: {cog}")
-        await ctx.send(f"`{cog}` successfully unloaded.")
+        url = 'https://mystb.in/'
+        async with aiohttp.ClientSession() as session:
+            async with session.post(f'{url}/documents', data=content) as resp:
+                holder = await resp.json()
+                await ctx.send(f"{url}{holder.get('key')}")
 
 
 def setup(bot):
