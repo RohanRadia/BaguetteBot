@@ -6,6 +6,14 @@ class Owners(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.command(aliases=("sd", "shutdown", "lo"))
+    async def logout(self, ctx):
+        """Logout of bot"""
+
+        await ctx.send("`Bot logging out... closing connections.`")
+        logger.info("Logged out - all connections closed.")
+        await self.bot.logout()
+
     @commands.command()
     async def load(self, ctx, cog: str):
         """Load a cog"""
