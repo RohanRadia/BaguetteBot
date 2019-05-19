@@ -1,5 +1,5 @@
 import os
-from bot import logger
+from bot import logger, aiohttpSession
 from datetime import datetime
 
 from discord.ext import commands
@@ -13,6 +13,7 @@ class Baguette(commands.Bot):
         super().__init__(command_prefix='?',
                          description='A bot made for the personal use of TheMutantReaper#3615 but all of you randoms '
                                      'can use it too!')
+        self.http_session = aiohttpSession()
 
     async def on_message(self, message):
         ctx = await self.get_context(message, cls=BaguetteContext)
