@@ -32,7 +32,7 @@ class CommandErrorHandler(commands.Cog):
 
         else:
             logger.error(f"Exception '{type(error).__name__}' raised in command when {ctx.author.id} invoked "
-                         f"'{ctx.command}'")
+                         f"'{ctx.command}' {error}")
 
 
 def setup(bot):
