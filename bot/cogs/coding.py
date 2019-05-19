@@ -12,6 +12,8 @@ class Coding(commands.Cog):
     async def mystbin(self, ctx, *, content: str):
         """Send data to MystBin"""
 
+        url = 'https://mystb.in/'
+
         if content.startswith("```python") and content.endswith("```"):
             content = content[10:len(content)-3]
         elif content.startswith("```py") and content.endswith("```"):
@@ -23,11 +25,9 @@ class Coding(commands.Cog):
             if content[-1] == '`':
                 content = content[:len(content) - 1]
 
-        url = 'https://mystb.in/'
-        async with aiohttp.ClientSession() as session:
-            async with session.post(f'{url}/documents', data=content) as resp:
-                holder = await resp.json()
-                await ctx.send(f"{url}{holder.get('key')}")
+        async with self.bot.http_session.post(f'{url}/documents', data=content) as resp:
+            holder = await resp.json()
+            await ctx.send(f"{url}{holder.get('key')}")
 
 
 def setup(bot):
