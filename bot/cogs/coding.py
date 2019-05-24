@@ -1,6 +1,3 @@
-import aiohttp
-
-from bot import logger
 from discord.ext import commands
 
 
