@@ -73,6 +73,8 @@ class Owners(commands.Cog):
         with open(Path("bot", "resources", "commandPerms.json"), 'r', encoding="utf8") as f:
             perms = json.load(f)
 
+        command = command.lower()
+
         if user != 0:
             if user.id not in perms[command]:
                 perms[command].append(user.id)
@@ -92,6 +94,8 @@ class Owners(commands.Cog):
         with open(Path("bot", "resources", "commandPerms.json"), 'r', encoding="utf8") as f:
             perms = json.load(f)
 
+        command = command.lower()
+
         if user != 0:
             if user.id in perms[command]:
                 perms[command].remove(user.id)
@@ -106,22 +110,42 @@ class Owners(commands.Cog):
         else:
             await ctx.send(f"`{command.title()}` removed from `{str(user.id)}`")
 
+    @perms.command()
+    async def all(self, ctx, action, user: discord.Member):
+        with open(Path("bot", "resources", "commandPerms.json"), 'r', encoding="utf8") as f:
+            perms = json.load(f)
+
+        if action.lower() == "add":
+            for command in perms:
+                if user.id not in perms[command]:
+                    perms[command].append(user.id)
+            await ctx.send(f"`{command.title()}` has had all permissions added.")
+        elif action.lower() == "remove":
+            for command in perms:
+                if user.id in perms[command]:
+                    perms[command].remove(user.id)
+            await ctx.send(f"`{command.title()}` has had all permissions (excluding global commands) revoked.")
+
+
+        with open(Path("bot", "resources", "commandPerms.json"), 'w', encoding="utf8") as f:
+            json.dump(perms, f)
+
     async def bot_check(self, ctx):
         with open(Path("bot", "resources", "commandPerms.json"), 'r', encoding="utf8") as f:
             perms = json.load(f)
 
-        if ctx.command.name not in perms:
-            perms[ctx.command.name] = []
+        if ctx.command.qualified_name not in perms:
+            perms[ctx.command.qualified_name] = []
             with open(Path("bot", "resources", "commandPerms.json"), 'w', encoding="utf8") as f:
                 json.dump(perms, f)
 
         if ctx.author.id == int(os.environ.get("OWNER")):
             return True
 
-        if 0 in perms[ctx.command.name]:
+        if 0 in perms[ctx.command.qualified_name]:
             return True
 
-        if ctx.author.id in perms[ctx.command.name]:
+        if ctx.author.id in perms[ctx.command.qualified_name]:
             return True
 
         return False
