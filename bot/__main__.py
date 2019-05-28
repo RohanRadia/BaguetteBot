@@ -1,14 +1,12 @@
 import os
-from bot import logger, aiohttpSession
+from bot import logger, aiohttpSession, getcogs
 from datetime import datetime
 
 import discord
 from discord.ext import commands
 from utils.custom_context import BaguetteContext
 
-cogs = ["cogs.errorhandler",
-        "cogs.owner",
-        "cogs.coding"]
+cogs = getcogs()
 
 
 class Baguette(commands.AutoShardedBot):
@@ -25,7 +23,7 @@ class Baguette(commands.AutoShardedBot):
     async def on_ready(self):
         for cog in cogs:
             try:
-                self.load_extension(cog)
+                self.load_extension(f"cogs.{cog}")
                 logger.info(f'Successfully loaded extension: {cog}')
             except Exception as e:
                 logger.error(f'Failed to load extension: {cog}\n{e}')
