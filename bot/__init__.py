@@ -61,4 +61,7 @@ async def postgresfetch(query):
 
 async def prefix(client, message):
     data = await postgresfetch(f"""SELECT * FROM server_info WHERE server_id={message.guild.id}""")
+    if dict(data).get(message.guild.id) is None:
+        return 'b!'
+
     return dict(data).get(message.guild.id)
