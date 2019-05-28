@@ -41,8 +41,13 @@ class Owners(commands.Cog):
     async def reload(self, ctx, cog: str):
         """Reload a cog"""
 
-        self.bot.unload_extension(cog)
+        try:
+            self.bot.unload_extension(cog)
+        except Exception as e:
+            pass
+
         self.bot.load_extension(cog)
+
         logger.info(f"Successfully reloaded extension: {cog}")
         await ctx.send(f"`{cog}` successfully reloaded.")
 
