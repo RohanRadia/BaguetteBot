@@ -1,5 +1,5 @@
 import os
-from bot import logger, aiohttpSession, getcogs
+from bot import logger, aiohttpSession, getcogs, prefix
 from datetime import datetime
 
 import discord
@@ -11,7 +11,7 @@ cogs = getcogs()
 
 class Baguette(commands.AutoShardedBot):
     def __init__(self):
-        super().__init__(command_prefix='d!',
+        super().__init__(command_prefix=prefix,
                          description='A bot made for the personal use of TheMutantReaper#3615 but all of you randoms '
                                      'can use it too!')
         self.http_session = aiohttpSession()
