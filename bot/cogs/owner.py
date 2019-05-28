@@ -44,7 +44,8 @@ class Owners(commands.Cog):
         try:
             self.bot.unload_extension(cog)
         except Exception as e:
-            pass
+            logger.error(f"Attempted to unload cog: {cog} which was never loaded on start up. Bypassing and attempting "
+                         f"to complete function.")
 
         self.bot.load_extension(cog)
 
