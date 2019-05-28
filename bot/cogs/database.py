@@ -17,21 +17,28 @@ class Database(commands.Cog):
         await postgresexecute(f"""DELETE FROM server_info WHERE server_id={guild.id}""")
         logger.info(f"Bot joined left: {guild.id}")
 
-    @commands.command()
-    async def pgexecute(self, ctx, *, query):
+    @commands.group(name="pg", invoke_without_command=False)
+    @commands.is_owner()
+    async def pg(self, ctx):
+        pass
+
+    @pg.command()
+    @commands.is_owner()
+    async def execute(self, ctx, *, query):
         try:
             await postgresexecute(f"""{query}""")
             await ctx.message.add_reaction('\U00002705')
         except:
             await ctx.message.add_reaction('\U0000274c')
 
-    @commands.command()
-    async def pgfetch(self, ctx, *, query):
+    @pg.command()
+    @commands.is_owner()
+    async def fetch(self, ctx, *, query):
         try:
             data = await postgresfetch(f"""{query}""")
             await ctx.message.add_reaction('\U00002705')
             await ctx.send(f"```\n{data}```")
-        except:
+        except Exception as e:
             await ctx.message.add_reaction('\U0000274c')
 
 

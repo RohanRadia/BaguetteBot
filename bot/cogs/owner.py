@@ -1,10 +1,5 @@
-import json
-import os
-
 from bot import logger
-import discord
 from discord.ext import commands
-from pathlib import Path
 
 
 class Owners(commands.Cog):
@@ -12,6 +7,7 @@ class Owners(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=("sd", "shutdown", "lo"))
+    @commands.is_owner()
     async def logout(self, ctx):
         """Logout of bot"""
 
@@ -22,6 +18,7 @@ class Owners(commands.Cog):
         await self.bot.logout()
 
     @commands.command()
+    @commands.is_owner()
     async def load(self, ctx, cog: str):
         """Load a cog"""
 
@@ -30,6 +27,7 @@ class Owners(commands.Cog):
         await ctx.send(f"`{cog}` successfully loaded.")
 
     @commands.command()
+    @commands.is_owner()
     async def unload(self, ctx, cog: str):
         """Unload a cog"""
 
@@ -38,6 +36,7 @@ class Owners(commands.Cog):
         await ctx.send(f"`{cog}` successfully unloaded.")
 
     @commands.command()
+    @commands.is_owner()
     async def reload(self, ctx, cog: str):
         """Reload a cog"""
 
