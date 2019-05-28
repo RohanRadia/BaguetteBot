@@ -18,6 +18,8 @@ aiohttp = "*"
 aiodns = "*"
 loguru = "*"
 discord-py = "*"
+asyncpg = "*"
+asyncio = "*"
 
 [requires]
 python_version = "3.7"

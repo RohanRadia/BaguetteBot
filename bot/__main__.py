@@ -2,15 +2,18 @@ import os
 from bot import logger, aiohttpSession
 from datetime import datetime
 
+import discord
 from discord.ext import commands
 from utils.custom_context import BaguetteContext
 
-cogs = ["cogs.errorhandler", "cogs.owner", "cogs.coding"]
+cogs = ["cogs.errorhandler",
+        "cogs.owner",
+        "cogs.coding"]
 
 
-class Baguette(commands.Bot):
+class Baguette(commands.AutoShardedBot):
     def __init__(self):
-        super().__init__(command_prefix='?',
+        super().__init__(command_prefix='d!',
                          description='A bot made for the personal use of TheMutantReaper#3615 but all of you randoms '
                                      'can use it too!')
         self.http_session = aiohttpSession()
@@ -28,6 +31,8 @@ class Baguette(commands.Bot):
                 logger.error(f'Failed to load extension: {cog}\n{e}')
 
         logger.info(f'Client Logged in at {datetime.now()}')
+
+        await self.change_presence(activity=discord.Game(name=f"Shard {str(self.shard_count)}"))
 
     def run(self):
         super().run(os.environ.get('TOKEN'), reconnect=True)
