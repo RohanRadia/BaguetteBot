@@ -16,6 +16,7 @@ def aiohttpSession():
 
     return ClientSession(connector=TCPConnector(resolver=AsyncResolver(), family=socket.AF_INET))
 
+
 def getcogs():
     """Get all files in a directory"""
     cogs = []
