@@ -27,7 +27,7 @@ class Moderation(commands.Cog):
         await conn.execute(f"UPDATE server_info SET prefix='{prefix}' WHERE server_id={ctx.guild.id}")
         data = await conn.fetch(f"SELECT prefix FROM server_info WHERE server_id={ctx.guild.id}")
 
-        self.bot.connpool.release(conn)
+        await self.bot.connpool.release(conn)
 
         emb = discord.Embed(colour=self.bot.gold)
         emb.add_field(name='Prefix', value=f"{data[0][0]}")
