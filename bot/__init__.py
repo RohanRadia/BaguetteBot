@@ -17,13 +17,13 @@ def aiohttpSession():
     return ClientSession(connector=TCPConnector(resolver=AsyncResolver(), family=socket.AF_INET))
 
 
-def getcogs():
+def getcogs(path: str):
     """Get all files in a directory"""
     cogs = []
-    generator = Path("bot", "cogs").glob('*.py')
+    generator = Path("bot", path).glob('*.py')
 
     for cog in generator:
-        cogs.append(os.path.splitext(os.path.basename(cog))[0])
+        cogs.append(f"{path}.{os.path.splitext(os.path.basename(cog))[0]}")
 
     return cogs
 
