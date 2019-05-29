@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c0252c0f9c3072f6c0e92ac2501af0af539bd045cba610d3e3e2924591c97545"
+            "sha256": "be597a66a2a2d2fb9ac44e0eacb3ab70531e9cb5ba98c80b828351d6683ff607"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -166,12 +166,38 @@
             "index": "pypi",
             "version": "==1.1.1"
         },
+        "discord.py": {
+            "hashes": [
+                "sha256:d0ab22f1fee1fcc02ac50a67ff49a5d1f6d7bc7eba77e34e35bd160b3ad3d7e8"
+            ],
+            "version": "==1.1.1"
+        },
+        "humanize": {
+            "hashes": [
+                "sha256:a43f57115831ac7c70de098e6ac46ac13be00d69abbf60bdcac251344785bb19"
+            ],
+            "version": "==0.5.1"
+        },
         "idna": {
             "hashes": [
                 "sha256:c357b3f628cf53ae2c4c05627ecc484553142ca23264e593d327bcde5e9c3407",
                 "sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"
             ],
             "version": "==2.8"
+        },
+        "import-expression": {
+            "hashes": [
+                "sha256:97d2fa142426f4a2783d5eeeab5d7292879ff012c06db7c037b7b3e356438ca8"
+            ],
+            "version": "==0.3.8.post2"
+        },
+        "jishaku": {
+            "hashes": [
+                "sha256:a1548ab512923e885f8984997bc2d96e416019b13cdffc393596d12c257d5569",
+                "sha256:a789549c4747bdb0711f6e47cd0983ee9fe4ec066e7b3c474a1714ffa87c7b0e"
+            ],
+            "index": "pypi",
+            "version": "==1.12.3.123"
         },
         "loguru": {
             "hashes": [

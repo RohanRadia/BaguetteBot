@@ -29,39 +29,7 @@ def getcogs():
 
 
 async def postgresconn():
-    return await asyncpg.connect(host=os.environ['PG_HOST'],
-                           user=os.environ['PG_USER'],
-                           password=os.environ['PG_PASS'],
-                           database=os.environ['PG_DB'])
-
-
-async def postgresexecute(query):
-    conn = await postgresconn()
-    try:
-        await conn.execute(query)
-        return True
-    except Exception as e:
-        logger.error(f"Error occured when accessing PG DB: {e}")
-        return False
-    finally:
-        await conn.close()
-
-
-async def postgresfetch(query):
-    conn = await postgresconn()
-    try:
-        data = await conn.fetch(query)
-        return data
-    except Exception as e:
-        logger.error(f"Error occured when accessing PG DB: {e}")
-        return False
-    finally:
-        await conn.close()
-
-
-async def prefix(client, message):
-    data = await postgresfetch(f"""SELECT * FROM server_info WHERE server_id={message.guild.id}""")
-    if dict(data).get(message.guild.id) is None:
-        return 'b!'
-
-    return dict(data).get(message.guild.id)
+    return await asyncpg.create_pool(host=os.environ['PG_HOST'],
+                                     user=os.environ['PG_USER'],
+                                     password=os.environ['PG_PASS'],
+                                     database=os.environ['PG_DB'])
