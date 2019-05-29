@@ -1,9 +1,11 @@
-from discord.ext import commands
+import discord
+from discord.ext import commands, tasks
 
 
 class _Stats(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.statusupdate.start()
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -24,6 +26,15 @@ class _Stats(commands.Cog):
                                f"WHERE user_id=579399080799633448")
             await self.bot.connpool.release(conn)
             self.bot.message_interval = 0
+
+    @tasks.loop(minutes=1)
+    async def statusupdate(self):
+        await self.bot.change_presence(activity=discord.Game(name=f"Shard {str(self.bot.shard_count)} | "
+        f"{str(len(self.bot.guilds))} Guilds"))
+
+    @statusupdate.before_loop
+    async def before_statusupdate(self):
+        await self.bot.wait_until_ready()
 
 
 def setup(bot):

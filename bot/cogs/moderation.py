@@ -33,6 +33,11 @@ class Moderation(commands.Cog):
         emb.add_field(name='Prefix', value=f"{data[0][0]}")
         await ctx.send(embed=emb)
 
+    @commands.command()
+    @commands.has_permissions(ban=True)
+    async def ban(self, ctx):
+        ctx.ban()
+
 
 def setup(bot):
     bot.add_cog(Moderation(bot))

@@ -22,7 +22,7 @@ class Database(commands.Cog):
         await conn.execute(f"""DELETE FROM server_info WHERE server_id={guild.id}""")
 
         await self.bot.connpool.release(conn)
-        logger.info(f"Bot joined left: {guild.id}")
+        logger.info(f"Bot left guild: {guild.id}")
 
     @commands.group(name="pg", invoke_without_command=False)
     @commands.is_owner()
