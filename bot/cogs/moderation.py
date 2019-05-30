@@ -36,13 +36,39 @@ class Moderation(commands.Cog):
 
     @commands.command(aliases=['k'])
     @commands.has_permissions(kick_members=True)
-    async def kick(self, ctx, member: discord.Member, *, reason=None):
+    async def kick(self, ctx, member: discord.User, *, reason=None):
         try:
             await ctx.guild.kick(member, reason=reason)
         except:
             await ctx.error('Unable to kick member.')
 
         em = discord.Embed(title=f'Kicked: {member}', color=self.bot.gold, description=f'Reason: {reason}')
+        await ctx.send(embed=em)
+
+    @commands.command(aliases=['b'])
+    @commands.has_permissions(ban_members=True)
+    async def ban(self, ctx, member: discord.User, *, reason=None):
+        try:
+            await ctx.guild.ban(member, reason=reason)
+        except:
+            return await ctx.error('Unable to ban member.')
+
+        em = discord.Embed(title=f'Banned: {member}', color=self.bot.gold, description=f'Reason: {reason}')
+        await ctx.send(embed=em)
+
+    @commands.command(aliases=['ub'])
+    @commands.has_permissions(ban_members=True)
+    async def unban(self, ctx, *, member: discord.User):
+        if member is None:
+            return await ctx.error("Could not find user to unban.")
+
+        try:
+            await ctx.guild.unban(member, reason=f'Unban command invoked by: {ctx.author}')
+        except:
+            return await ctx.error('Could not unban member.')
+
+        em = discord.Embed(title=f'Banned: {member}', color=self.bot.gold, description=f'Unban command invoked by: '
+        f'{ctx.author.mention}')
         await ctx.send(embed=em)
 
     @commands.command()
@@ -87,11 +113,11 @@ class Moderation(commands.Cog):
         except:
             await ctx.send(f"{member} is not muted.")
 
-    @commands.command(name='[urge', aliases=['del', 'd', 'purge'])
+    @commands.command(name='purge', aliases=['del', 'd'])
     @commands.has_permissions(manage_messages=True)
     async def delete(self, ctx, amount: int):
         await ctx.channel.purge(limit=amount)
-        await ctx.send(f'{amount} messages have been deleted!')
+        await ctx.send(f'`{amount} messages have been deleted!`')
 
 
 def setup(bot):
